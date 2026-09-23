@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratório de Matemática - 5º Ano</title>
+    <!-- Tailwind CSS para design ágil e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para ícones educacionais dinâmicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Fonte Google Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .font-kids {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        /* Transições de visibilidade dos módulos */
+        .modulo-conteudo {
+            display: none;
+            opacity: 0;
+            transform: scale(0.98);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modulo-conteudo.ativo {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+        /* Efeito de botão ativo no menu */
+        .menu-btn.ativo {
+            background-color: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        }
+        .menu-btn.ativo i {
+            color: #facc15 !important;
+        }
+        /* Canvas de desenho sobre a tela */
+        #lousa-canvas {
+            touch-action: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 h-screen w-screen overflow-hidden flex flex-row">
+
+    <!-- BARRA LATERAL (MENU RESPONSIVO) -->
+    <aside class="w-20 md:w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 shadow-lg">
+        <div>
+            <!-- Cabeçalho do Menu / Logo -->
+            <div class="h-20 flex items-center justify-center md:justify-start md:px-6 bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 text-white shadow-md">
+                <div class="w-11 h-11 bg-yellow-400 text-indigo-900 rounded-2xl flex items-center justify-center shadow-md shrink-0">
+                    <i class="fa-solid fa-shapes text-2xl"></i>
+                </div>
+                <div class="hidden md:block ml-3">
+                    <h1 class="font-kids font-bold text-xl tracking-wide leading-tight">MathLab 5º</h1>
+                    <span class="text-xs text-indigo-200 uppercase font-semibold tracking-wider">Rede Pública DF</span>
+                </div>
+            </div>
+
+            <!-- Lista de Módulos (BNCC 5º Ano) -->
+            <nav class="p-3 space-y-1.5 overflow-y-auto max-h-[calc(100vh-160px)]" id="nav-modulos">
+                <button onclick="navegarPara('inicio', 'Laboratório de Matemática', this)" class="menu-btn ativo group w-full flex items-center p-3.5 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
+                    <i class="fa-solid fa-house-chimney text-xl w-7 text-center group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline-block ml-3 font-semibold text-base tracking-normal">Início</span>
+                </button>
+
+                <button onclick="navegarPara('numeros', 'Números, Frações e Decimais', this)" class="menu-btn group w-full flex items-center p-3.5 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
+                    <i class="fa-solid fa-pizza-slice text-xl w-7 text-center text-amber-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline-block ml-3 font-semibold text-base tracking-normal">Números</span>
+                </button>
+
+                <button onclick="navegarPara('algebra', 'Álgebra e Sentenças Matemáticas', this)" class="menu-btn group w-full flex items-center p-3.5 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
+                    <i class="fa-solid fa-scale-balanced text-xl w-7 text-center text-emerald-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline-block ml-3 font-semibold text-base tracking-normal">Álgebra</span>
+                </button>
+
+                <button onclick="navegarPara('geometria', 'Geometria Espacial e Simetria', this)" class="menu-btn group w-full flex items-center p-3.5 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
+                    <i class="fa-solid fa-cube text-xl w-7 text-center text-purple-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline-block ml-3 font-semibold text-base tracking-normal">Geometria</span>
+                </button>
+
+                <button onclick="navegarPara('medidas', 'Grandezas e Medidas', this)" class="menu-btn group w-full flex items-center p-3.5 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
+                    <i class="fa-solid fa-ruler-combined text-xl w-7 text-center text-sky-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline-block ml-3 font-semibold text-base tracking-normal">Medidas</span>
+                </button>
+
+                <button onclick="navegarPara('estatistica', 'Estatística e Probabilidade', this)" class="menu-btn group w-full flex items-center p-3.5 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
+                    <i class="fa-solid fa-chart-pie text-xl w-7 text-center text-rose-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="hidden md:inline-block ml-3 font-semibold text-base tracking-normal">Estatística</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Indicador de Status inferior -->
+        <div class="p-3 border-t border-slate-200 text-center md:text-left">
+            <div class="hidden md:flex items-center gap-2 px-2 py-1.5 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-semibold">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Modo Sala de Aula Ativo</span>
+            </div>
+            <div class="md:hidden flex justify-center text-emerald-600 text-sm">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+        
+        <!-- BARRA SUPERIOR (MODO TV / APRESENTAÇÃO) -->
+        <header class="h-20 bg-white border-b border-slate-200 px-6 flex items-center justify-between z-20 shrink-0 shadow-sm">
+            <div class="flex items-center gap-3">
+                <span id="icone-cabecalho" class="p-2.5 bg-indigo-100 text-indigo-700 rounded-xl text-lg hidden sm:inline-block">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </span>
+                <div>
+                    <h2 id="titulo-pagina" class="font-kids font-bold text-2xl md:text-3xl text-slate-800 leading-tight">
+                        Laboratório de Matemática
+                    </h2>
+                    <p id="subtitulo-pagina" class="text-xs text-slate-500 font-medium hidden sm:block">5º Ano do Ensino Fundamental • Exploração Prática</p>
+                </div>
+            </div>
+
+            <!-- Ferramentas Rápidas para a Professora -->
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- Botão Ativar Lousa / Pincel -->
+                <button id="btn-toggle-lousa" onclick="alternarLousa()" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-semibold rounded-xl shadow-md shadow-amber-200 flex items-center gap-2 transition" title="Lousa/Caneta de destaque sobre a tela">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span class="hidden md:inline text-sm">Caneta TV</span>
+                </button>
+
+                <!-- Botão Modo Tela Cheia -->
+                <button onclick="alternarTelaCheia()" class="p-2.5 md:px-4 md:py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-semibold rounded-xl transition flex items-center gap-2" title="Tela Cheia para a TV">
+                    <i class="fa-solid fa-expand text-lg" id="icone-tela-cheia"></i>
+                    <span class="hidden md:inline text-sm">Tela Cheia</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO DINÂMICO DOS MÓDULOS -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50 relative" id="container-conteudo">
+
+            <!-- SEÇÃO: INÍCIO (DASHBOARD COM CARDS DINÂMICOS) -->
+            <section id="modulo-inicio" class="modulo-conteudo ativo max-w-6xl mx-auto space-y-6">
+                <!-- Boas-vindas -->
+                <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 text-white rounded-3xl p-6 md:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-3 text-center md:text-left">
+                        <span class="px-3.5 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-yellow-300">
+                            Espaço do Professor e dos Alunos
+                        </span>
+                        <h3 class="font-kids text-3xl md:text-4xl font-bold leading-tight">
+                            Aprender Matemática Brincando e Experimentando!
+                        </h3>
+                        <p class="text-indigo-100 text-base md:text-lg max-w-xl">
+                            Selecione um laboratório para projetar na TV da sala de aula. Alterne valores, observe os gráficos e deduza regras junto com as crianças.
+                        </p>
+                    </div>
+                    <div class="w-32 h-32 md:w-44 md:h-44 bg-white/10 rounded-3xl p-4 flex items-center justify-center shrink-0 border border-white/20 backdrop-blur-sm">
+                        <i class="fa-solid fa-rocket text-6xl md:text-7xl text-yellow-300 drop-shadow-md animate-bounce"></i>
+                    </div>
+                </div>
+
+                <!-- Cards de Atalho Rápido para os Módulos -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+                    
+                    <!-- Card Números -->
+                    <div onclick="navegarPorId('numeros')" class="bg-white border border-slate-200 hover:border-amber-400 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-pizza-slice"></i>
+                            </div>
+                            <h4 class="font-kids text-xl font-bold text-slate-800">Frações e Decimais</h4>
+                            <p class="text-sm text-slate-500">Laboratório visual de pizzas, chocolates e reta numérica interativa.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-amber-600 font-semibold text-sm">
+                            <span>Acessar Laboratório</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Álgebra -->
+                    <div onclick="navegarPorId('algebra')" class="bg-white border border-slate-200 hover:border-emerald-400 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <h4 class="font-kids text-xl font-bold text-slate-800">Álgebra e Padrões</h4>
+                            <p class="text-sm text-slate-500">Balança de pratos de equilíbrio e máquina de sequências lógicas.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-emerald-600 font-semibold text-sm">
+                            <span>Acessar Laboratório</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Geometria -->
+                    <div onclick="navegarPorId('geometria')" class="bg-white border border-slate-200 hover:border-purple-400 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-cube"></i>
+                            </div>
+                            <h4 class="font-kids text-xl font-bold text-slate-800">Sólidos e Simetria</h4>
+                            <p class="text-sm text-slate-500">Visualização 3D, planificação de formas e espelho simétrico.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-purple-600 font-semibold text-sm">
+                            <span>Acessar Laboratório</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Medidas -->
+                    <div onclick="navegarPorId('medidas')" class="bg-white border border-slate-200 hover:border-sky-400 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-ruler-combined"></i>
+                            </div>
+                            <h4 class="font-kids text-xl font-bold text-slate-800">Área e Perímetro</h4>
+                            <p class="text-sm text-slate-500">Malha quadriculada de blocos e relógio ponteiro/digital.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-sky-600 font-semibold text-sm">
+                            <span>Acessar Laboratório</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Estatística -->
+                    <div onclick="navegarPorId('estatistica')" class="bg-white border border-slate-200 hover:border-rose-400 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                            <h4 class="font-kids text-xl font-bold text-slate-800">Probabilidade e Gráficos</h4>
+                            <p class="text-sm text-slate-500">Roleta de experimentos da sorte e gerador instantâneo de barras.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-rose-600 font-semibold text-sm">
+                            <span>Acessar Laboratório</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Dica da Professora -->
+                    <div class="bg-indigo-50 border border-indigo-200 p-6 rounded-3xl flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-indigo-700 font-bold">
+                                <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
+                                <span>Dica Pedagógica</span>
+                            </div>
+                            <p class="text-xs text-indigo-900/80 leading-relaxed">
+                                Use a <strong>Caneta TV</strong> no canto superior direito para desenhar ou circular qualquer elemento na tela enquanto explica para a turma.
+                            </p>
+                        </div>
+                        <div class="text-xs text-indigo-500 font-semibold mt-4">
+                            Sem necessidade de cadastro ou internet constante.
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SEÇÃO: NÚMEROS E FRAÇÕES (LABORATÓRIO DE PORCENTAGEM BNCC 5º ANO) -->
+            <section id="modulo-numeros" class="modulo-conteudo max-w-6xl mx-auto space-y-6">
+                
+                <!-- Barra de Abas Internas do Módulo Números -->
+                <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-2">
+                        <button id="tab-btn-porcentagem" onclick="alternarSubAbaNumeros('porcentagem')" class="px-5 py-2.5 bg-amber-500 text-white font-kids font-semibold text-base rounded-xl shadow-md shadow-amber-200 flex items-center gap-2 transition">
+                            <i class="fa-solid fa-percent"></i>
+                            <span>Laboratório de Porcentagem</span>
+                        </button>
+                        <button id="tab-btn-loja" onclick="alternarSubAbaNumeros('loja')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-kids font-semibold text-base rounded-xl flex items-center gap-2 transition">
+                            <i class="fa-solid fa-store text-emerald-600"></i>
+                            <span>Cantina & Descontos</span>
+                        </button>
+                        <button id="tab-btn-desafio" onclick="alternarSubAbaNumeros('desafio')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-kids font-semibold text-base rounded-xl flex items-center gap-2 transition">
+                            <i class="fa-solid fa-trophy text-yellow-500"></i>
+                            <span>Desafio da TV</span>
+                        </button>
+                    </div>
+
+                    <button onclick="navegarPorId('inicio')" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-house text-xs"></i>
+                        <span>Menu Início</span>
+                    </button>
+                </div>
+
+                <!-- SUB-ABA 1: EXPLORADOR VISUAL DE PORCENTAGEM -->
+                <div id="subaba-porcentagem" class="space-y-6">
+                    
+                    <!-- Painel Superior de Controle Rápido -->
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                        <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                            
+                            <!-- Display Gigante da Porcentagem -->
+                            <div class="text-center lg:text-left shrink-0">
+                                <span class="text-xs uppercase font-bold tracking-wider text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Valor Atual</span>
+                                <div class="flex items-baseline justify-center lg:justify-start gap-2 mt-2">
+                                    <span id="display-porcentagem" class="font-kids font-bold text-6xl md:text-7xl text-slate-800">50</span>
+                                    <span class="font-kids font-bold text-4xl md:text-5xl text-amber-500">%</span>
+                                </div>
+                                <p id="legenda-significado" class="text-slate-500 text-sm font-medium mt-1">Representa 50 de cada 100 partes (a metade!).</p>
+                            </div>
+
+                            <!-- Botões de Atalho BNCC 5º Ano -->
+                            <div class="flex-1 w-full flex flex-col gap-3">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider text-center lg:text-left">Porcentagens Notáveis do 5º Ano:</span>
+                                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+                                    <button onclick="definirPorcentagem(10)" class="btn-pct p-3 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50 hover:bg-amber-50 font-kids font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center">
+                                        <span class="text-lg">10%</span>
+                                        <span class="text-[11px] text-slate-500 font-normal">Décima parte</span>
+                                    </button>
+                                    <button onclick="definirPorcentagem(25)" class="btn-pct p-3 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50 hover:bg-amber-50 font-kids font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center">
+                                        <span class="text-lg">25%</span>
+                                        <span class="text-[11px] text-slate-500 font-normal">Quarta parte</span>
+                                    </button>
+                                    <button onclick="definirPorcentagem(50)" class="btn-pct p-3 rounded-2xl border-2 border-amber-500 bg-amber-50 font-kids font-bold text-amber-700 transition flex flex-col items-center shadow-sm">
+                                        <span class="text-lg">50%</span>
+                                        <span class="text-[11px] text-amber-600 font-normal">Metade</span>
+                                    </button>
+                                    <button onclick="definirPorcentagem(75)" class="btn-pct p-3 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50 hover:bg-amber-50 font-kids font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center">
+                                        <span class="text-lg">75%</span>
+                                        <span class="text-[11px] text-slate-500 font-normal">Três quartos</span>
+                                    </button>
+                                    <button onclick="definirPorcentagem(100)" class="btn-pct col-span-2 sm:col-span-1 p-3 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50 hover:bg-amber-50 font-kids font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center">
+                                        <span class="text-lg">100%</span>
+                                        <span class="text-[11px] text-slate-500 font-normal">O total (1 inteiro)</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controle Deslizante (Slider Fluido) -->
+                        <div class="mt-8 pt-6 border-t border-slate-100 space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-400">
+                                <span>0% (Vazio)</span>
+                                <span class="text-amber-600 font-kids text-sm">Arraste o controle para qualquer valor</span>
+                                <span>100% (Cheio)</span>
+                            </div>
+                            <input type="range" id="slider-porcentagem" min="0" max="100" value="50" oninput="ajustarPorcentagemPeloSlider(this.value)" class="w-full h-3.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500 focus:outline-none focus:ring-4 focus:ring-amber-200 transition">
+                        </div>
+                    </div>
+
+                    <!-- Visualizações Gráficas Simultâneas -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        
+                        <!-- Coluna 1: Grade de 100 Quadrados (10x10) -->
+                        <div class="lg:col-span-7 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-bold">
+                                            <i class="fa-solid fa-table-cells"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-kids font-bold text-lg text-slate-800">Grade de 100 Blocos (Cento)</h4>
+                                            <p class="text-xs text-slate-400">Cada quadradinho vale exatamente 1% (1 centésimo)</p>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="limparOuPreencherGrade()" id="btn-toggle-grade" class="text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-semibold transition">
+                                        Zerar Grade
+                                    </button>
+                                </div>
+
+                                <!-- A Malha 10x10 Gerada Dinamicamente -->
+                                <div id="grade-100" class="grid grid-cols-10 gap-1.5 p-3 bg-slate-50 border border-slate-200 rounded-2xl max-w-md mx-auto aspect-square">
+                                    <!-- 100 quadradinhos inseridos via JS -->
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3.5 h-3.5 rounded bg-amber-500 inline-block"></span>
+                                    <span>Pintados: <strong id="contagem-pintados" class="text-slate-800">50</strong></span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3.5 h-3.5 rounded bg-slate-200 inline-block"></span>
+                                    <span>Vazios: <strong id="contagem-vazios" class="text-slate-800">50</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coluna 2: Bateria, Pizza e Cartão de Equivalência -->
+                        <div class="lg:col-span-5 flex flex-col gap-6">
+                            
+                            <!-- Bateria do Celular + Pizza -->
+                            <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-6">
+                                <h4 class="font-kids font-bold text-lg text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-eye text-indigo-500"></i>
+                                    <span>Exemplos do Dia a Dia</span>
+                                </h4>
+
+                                <!-- Metáfora 1: Bateria do Celular -->
+                                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-2">
+                                    <div class="flex items-center justify-between text-xs font-bold text-slate-600">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-mobile-screen-button text-indigo-500"></i>
+                                            <span>Bateria do Celular:</span>
+                                        </span>
+                                        <span id="status-bateria-texto" class="text-emerald-600">Carga Normal</span>
+                                    </div>
+                                    <!-- Corpo da Bateria Física -->
+                                    <div class="flex items-center gap-1">
+                                        <div class="flex-1 h-8 bg-slate-200 rounded-xl p-1 border-2 border-slate-300 relative overflow-hidden">
+                                            <div id="barra-bateria-nivel" class="h-full bg-emerald-500 rounded-lg transition-all duration-300 flex items-center justify-end pr-2 text-white font-bold text-xs" style="width: 50%;">
+                                                <i class="fa-solid fa-bolt text-[10px]"></i>
+                                            </div>
+                                        </div>
+                                        <div class="w-2 h-4 bg-slate-400 rounded-r-md"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Metáfora 2: Círculo / Gráfico de Pizza SVG -->
+                                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4">
+                                    <div class="relative w-20 h-20 shrink-0">
+                                        <svg viewBox="0 0 36 36" class="w-20 h-20 -rotate-90">
+                                            <!-- Círculo de Fundo -->
+                                            <path class="text-slate-200" stroke-width="5" stroke="currentColor" fill="none"
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <!-- Preenchimento Dinâmico -->
+                                            <path id="svg-pizza-setor" class="text-amber-500 transition-all duration-300" stroke-dasharray="50, 100" stroke-width="5" stroke-linecap="round" stroke="currentColor" fill="none"
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        </svg>
+                                        <div class="absolute inset-0 flex items-center justify-center font-kids font-bold text-xs text-slate-700">
+                                            <span id="svg-pizza-texto">50%</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-xs text-slate-600 space-y-1">
+                                        <p class="font-bold text-slate-800">Gráfico Circular</p>
+                                        <p class="text-slate-500">Mostra a fatia do círculo inteiro que corresponde a esse percentual.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Cartão Pedagógico de Equivalências (A Chave da BNCC) -->
+                            <div class="bg-gradient-to-br from-indigo-700 to-indigo-900 text-white rounded-3xl p-6 shadow-md space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-xl bg-yellow-400 text-indigo-900 flex items-center justify-center font-bold text-sm">
+                                        <i class="fa-solid fa-equals"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-kids font-bold text-lg">Como Escrever Isso?</h4>
+                                        <p class="text-xs text-indigo-200">As 4 formas de dizer a mesma quantidade:</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 text-center pt-2">
+                                    <!-- Porcentagem -->
+                                    <div class="bg-white/10 rounded-2xl p-3 border border-white/15">
+                                        <span class="text-[10px] uppercase font-bold text-indigo-200">Porcentagem</span>
+                                        <div id="card-equiv-pct" class="font-kids font-bold text-xl text-yellow-300 mt-1">50%</div>
+                                    </div>
+                                    <!-- Fração -->
+                                    <div class="bg-white/10 rounded-2xl p-3 border border-white/15">
+                                        <span class="text-[10px] uppercase font-bold text-indigo-200">Fração</span>
+                                        <div id="card-equiv-frac" class="font-kids font-bold text-xl text-yellow-300 mt-1">1/2</div>
+                                    </div>
+                                    <!-- Decimal -->
+                                    <div class="bg-white/10 rounded-2xl p-3 border border-white/15">
+                                        <span class="text-[10px] uppercase font-bold text-indigo-200">Decimal</span>
+                                        <div id="card-equiv-dec" class="font-kids font-bold text-xl text-yellow-300 mt-1">0,50</div>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-white/10 rounded-2xl border border-white/15 text-xs text-indigo-100 flex items-start gap-2">
+                                    <i class="fa-solid fa-lightbulb text-yellow-400 text-base shrink-0 mt-0.5"></i>
+                                    <span id="card-dica-mental">Para calcular 50% de qualquer coisa, basta <strong>dividir por 2</strong> (achar a metade)!</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SUB-ABA 2: CANTINA & LOJA ESCOLAR (EDUCAÇÃO FINANCEIRA) -->
+                <div id="subaba-loja" class="hidden space-y-6">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                        
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+                            <div>
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold uppercase rounded-full tracking-wider">
+                                    Educação Financeira • 5º Ano
+                                </span>
+                                <h3 class="font-kids font-bold text-2xl md:text-3xl text-slate-800 mt-2">
+                                    Cantina & Loja da Escola: Dia de Liquidação!
+                                </h3>
+                                <p class="text-sm text-slate-500">
+                                    Escolha um item e veja como calcular o desconto mentalmente junto com a turma.
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                        </div>
+
+                        <!-- Seleção de Produtos da Cantina -->
+                        <div class="mt-6 space-y-3">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">1. Escolha o Produto:</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <button onclick="selecionarProdutoLoja('Mochila Escolar', 80, 'fa-bag-shopping', this)" class="btn-produto p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-left transition hover:scale-102">
+                                    <i class="fa-solid fa-bag-shopping text-2xl text-emerald-600 mb-2"></i>
+                                    <div class="font-kids font-bold text-slate-800 text-base">Mochila</div>
+                                    <div class="text-emerald-700 font-bold text-lg">R$ 80,00</div>
+                                </button>
+                                <button onclick="selecionarProdutoLoja('Combo de Lanche', 20, 'fa-burger', this)" class="btn-produto p-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 bg-slate-50 text-left transition hover:scale-102">
+                                    <i class="fa-solid fa-burger text-2xl text-amber-500 mb-2"></i>
+                                    <div class="font-kids font-bold text-slate-800 text-base">Lanche</div>
+                                    <div class="text-slate-600 font-bold text-lg">R$ 20,00</div>
+                                </button>
+                                <button onclick="selecionarProdutoLoja('Estojo Completo', 40, 'fa-pen-ruler', this)" class="btn-produto p-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 bg-slate-50 text-left transition hover:scale-102">
+                                    <i class="fa-solid fa-pen-ruler text-2xl text-purple-500 mb-2"></i>
+                                    <div class="font-kids font-bold text-slate-800 text-base">Estojo</div>
+                                    <div class="text-slate-600 font-bold text-lg">R$ 40,00</div>
+                                </button>
+                                <button onclick="selecionarProdutoLoja('Livro Ilustrado', 60, 'fa-book-bookmark', this)" class="btn-produto p-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 bg-slate-50 text-left transition hover:scale-102">
+                                    <i class="fa-solid fa-book-bookmark text-2xl text-sky-500 mb-2"></i>
+                                    <div class="font-kids font-bold text-slate-800 text-base">Livro</div>
+                                    <div class="text-slate-600 font-bold text-lg">R$ 60,00</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Seleção do Desconto Aplicado -->
+                        <div class="mt-6 space-y-3">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">2. Escolha a Porcentagem de Desconto:</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <button onclick="aplicarDescontoLoja(10, this)" class="btn-desconto p-3.5 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 font-kids font-bold text-slate-700 text-base transition">
+                                    10% de Desconto
+                                </button>
+                                <button onclick="aplicarDescontoLoja(25, this)" class="btn-desconto p-3.5 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 font-kids font-bold text-slate-700 text-base transition">
+                                    25% de Desconto
+                                </button>
+                                <button onclick="aplicarDescontoLoja(50, this)" class="btn-desconto p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-kids font-bold text-emerald-800 text-base transition shadow-sm">
+                                    50% de Desconto
+                                </button>
+                                <button onclick="aplicarDescontoLoja(75, this)" class="btn-desconto p-3.5 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 font-kids font-bold text-slate-700 text-base transition">
+                                    75% de Desconto
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Painel da Etiqueta e Passo a Passo do Cálculo Mental -->
+                        <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                            
+                            <!-- Etiqueta do Preço (Visual de Loja) -->
+                            <div class="md:col-span-5 bg-gradient-to-br from-emerald-500 to-teal-700 text-white rounded-3xl p-6 flex flex-col justify-between shadow-lg relative overflow-hidden">
+                                <div class="absolute -right-4 -bottom-4 text-white/10 text-9xl font-bold">
+                                    %
+                                </div>
+                                <div class="relative z-10 space-y-3">
+                                    <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider">
+                                        Cupom Fiscal
+                                    </span>
+                                    <h4 id="loja-resumo-produto" class="font-kids font-bold text-2xl">Mochila Escolar</h4>
+                                    
+                                    <div class="space-y-1 text-emerald-100 text-sm">
+                                        <div class="flex justify-between">
+                                            <span>Preço Original:</span>
+                                            <span id="loja-preco-original" class="font-bold line-through text-emerald-200">R$ 80,00</span>
+                                        </div>
+                                        <div class="flex justify-between text-yellow-300 font-bold">
+                                            <span id="loja-texto-desconto">Desconto (50%):</span>
+                                            <span id="loja-valor-desconto">- R$ 40,00</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="relative z-10 pt-4 border-t border-white/20 mt-4">
+                                    <span class="text-xs uppercase font-bold text-emerald-200">Preço com Desconto:</span>
+                                    <div id="loja-preco-final" class="font-kids font-bold text-4xl md:text-5xl text-yellow-300 drop-shadow">
+                                        R$ 40,00
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- O Raciocínio Mental Explicado para os Alunos -->
+                            <div class="md:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-6 flex flex-col justify-between">
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-2 text-indigo-700 font-bold text-sm">
+                                        <i class="fa-solid fa-brain text-indigo-500 text-lg"></i>
+                                        <span>Estratégia de Cálculo Mental (Para pensar rápido):</span>
+                                    </div>
+                                    
+                                    <div id="loja-passo-a-passo" class="space-y-2.5 text-sm text-slate-700">
+                                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                                            <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                            <p>50% significa exatamente a <strong>metade</strong> do valor total.</p>
+                                        </div>
+                                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                                            <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                            <p>A metade de R$ 80,00 é <strong>R$ 40,00</strong> (80 ÷ 2).</p>
+                                        </div>
+                                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                            <p>Subtraindo: R$ 80,00 - R$ 40,00 = <strong>R$ 40,00 a pagar!</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center gap-2">
+                                    <i class="fa-solid fa-chalkboard-user text-amber-500"></i>
+                                    <span>Pergunte para a turma antes de clicar no próximo desconto!</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SUB-ABA 3: DESAFIO INTERATIVO DA TV -->
+                <div id="subaba-desafio" class="hidden space-y-6">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm text-center max-w-3xl mx-auto space-y-6">
+                        
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-yellow-100 text-yellow-800 rounded-full font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <span>Atividade Interativa para a Turma</span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h3 id="desafio-pergunta" class="font-kids font-bold text-2xl md:text-3xl text-slate-800">
+                                Carregando desafio...
+                            </h3>
+                            <p id="desafio-dica" class="text-slate-500 text-sm">
+                                Chame um aluno até a frente para tocar na resposta correta!
+                            </p>
+                        </div>
+
+                        <!-- Alternativas em Botões Grandes para TV -->
+                        <div id="desafio-opcoes" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                            <!-- Inseridas dinamicamente via JS -->
+                        </div>
+
+                        <!-- Feedback Visual de Resposta -->
+                        <div id="desafio-feedback" class="hidden p-4 rounded-2xl text-base font-bold transition">
+                            <!-- Feedback de acerto ou incentivo -->
+                        </div>
+
+                        <!-- Botão Próximo Desafio -->
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-400 font-semibold">
+                                <i class="fa-solid fa-shuffle mr-1"></i> Perguntas aleatórias ilimitadas
+                            </span>
+                            <button onclick="gerarNovoDesafio()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-kids font-bold rounded-2xl shadow-md transition flex items-center gap-2">
+                                <span>Próxima Pergunta</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SEÇÃO: ÁLGEBRA E PADRÕES -->
+            <section id="modulo-algebra" class="modulo-conteudo max-w-5xl mx-auto">
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm text-center flex flex-col items-center justify-center min-h-[460px]">
+                    <div class="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full font-bold text-xs uppercase tracking-wider mb-3">Módulo em Preparação</span>
+                    <h3 class="font-kids text-3xl md:text-4xl font-bold text-slate-800 mb-3">Álgebra e Sentenças Matemáticas</h3>
+                    <p class="text-slate-500 max-w-lg text-base md:text-lg mb-8">
+                        Em breve: balança interativa de dois pratos para encontrar o termo desconhecido e máquina geradora de sequências lógicas.
+                    </p>
+                    <button onclick="navegarPorId('inicio')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-2xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Voltar ao Início</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: GEOMETRIA E SÓLIDOS -->
+            <section id="modulo-geometria" class="modulo-conteudo max-w-5xl mx-auto">
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm text-center flex flex-col items-center justify-center min-h-[460px]">
+                    <div class="w-20 h-20 bg-purple-100 text-purple-500 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-bold text-xs uppercase tracking-wider mb-3">Módulo em Preparação</span>
+                    <h3 class="font-kids text-3xl md:text-4xl font-bold text-slate-800 mb-3">Geometria e Simetria</h3>
+                    <p class="text-slate-500 max-w-lg text-base md:text-lg mb-8">
+                        Em breve: manipulador 3D de sólidos (arestas, vértices e faces), planificação interativa e espelho de reflexão simétrica.
+                    </p>
+                    <button onclick="navegarPorId('inicio')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-2xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Voltar ao Início</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: GRANDEZAS E MEDIDAS -->
+            <section id="modulo-medidas" class="modulo-conteudo max-w-5xl mx-auto">
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm text-center flex flex-col items-center justify-center min-h-[460px]">
+                    <div class="w-20 h-20 bg-sky-100 text-sky-500 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full font-bold text-xs uppercase tracking-wider mb-3">Módulo em Preparação</span>
+                    <h3 class="font-kids text-3xl md:text-4xl font-bold text-slate-800 mb-3">Grandezas e Medidas</h3>
+                    <p class="text-slate-500 max-w-lg text-base md:text-lg mb-8">
+                        Em breve: construtor de área e perímetro em malha quadriculada de 1cm² e relógio com sincronia instantânea analógico-digital.
+                    </p>
+                    <button onclick="navegarPorId('inicio')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-2xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Voltar ao Início</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: ESTATÍSTICA E PROBABILIDADE -->
+            <section id="modulo-estatistica" class="modulo-conteudo max-w-5xl mx-auto">
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm text-center flex flex-col items-center justify-center min-h-[460px]">
+                    <div class="w-20 h-20 bg-rose-100 text-rose-500 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full font-bold text-xs uppercase tracking-wider mb-3">Módulo em Preparação</span>
+                    <h3 class="font-kids text-3xl md:text-4xl font-bold text-slate-800 mb-3">Estatística e Probabilidade</h3>
+                    <p class="text-slate-500 max-w-lg text-base md:text-lg mb-8">
+                        Em breve: roleta probabilística com contagem rápida de giros e gerador visual de tabelas e gráficos em colunas.
+                    </p>
+                    <button onclick="navegarPorId('inicio')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-2xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Voltar ao Início</span>
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- LOUSA TRANSPARENTE INTERATIVA (CANETA SOBRE A TELA) -->
+    <div id="lousa-container" class="fixed inset-0 pointer-events-none z-40 hidden">
+        <!-- Canvas onde o traço é desenhado -->
+        <canvas id="lousa-canvas" class="w-full h-full pointer-events-auto cursor-crosshair"></canvas>
+
+        <!-- Barra de ferramentas flutuante da Lousa -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-4 pointer-events-auto border border-slate-700">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Caneta:</span>
+            
+            <!-- Paleta de Cores -->
+            <div class="flex items-center gap-2">
+                <button onclick="mudarCorCaneta('#ef4444', this)" class="w-7 h-7 rounded-full bg-red-500 ring-2 ring-white hover:scale-110 transition"></button>
+                <button onclick="mudarCorCaneta('#3b82f6', this)" class="w-7 h-7 rounded-full bg-blue-500 hover:scale-110 transition"></button>
+                <button onclick="mudarCorCaneta('#10b981', this)" class="w-7 h-7 rounded-full bg-emerald-500 hover:scale-110 transition"></button>
+                <button onclick="mudarCorCaneta('#facc15', this)" class="w-7 h-7 rounded-full bg-yellow-400 hover:scale-110 transition"></button>
+            </div>
+
+            <div class="w-[1px] h-6 bg-slate-700"></div>
+
+            <!-- Limpar traços -->
+            <button onclick="limparLousa()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-full text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-eraser"></i>
+                <span>Limpar</span>
+            </button>
+
+            <!-- Fechar Caneta -->
+            <button onclick="alternarLousa()" class="px-3 py-1.5 bg-red-500 hover:bg-red-600 rounded-full text-xs font-semibold text-white transition flex items-center gap-1.5">
+                <i class="fa-solid fa-xmark"></i>
+                <span>Fechar</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Mapeamento dos módulos para títulos e ícones
+        const infoModulos = {
+            'inicio': { titulo: 'Laboratório de Matemática', subtitulo: '5º Ano do Ensino Fundamental • Exploração Prática', icone: 'fa-chalkboard-user' },
+            'numeros': { titulo: 'Números, Frações e Decimais', subtitulo: 'Equivalência, representação gráfica e operações', icone: 'fa-pizza-slice' },
+            'algebra': { titulo: 'Álgebra e Sentenças Matemáticas', subtitulo: 'Equilíbrio, incógnitas e sequências recursivas', icone: 'fa-scale-balanced' },
+            'geometria': { titulo: 'Geometria e Formas Espaciais', subtitulo: 'Sólidos, planificação e eixos de simetria', icone: 'fa-cube' },
+            'medidas': { titulo: 'Grandezas e Medidas', subtitulo: 'Cálculo de área, contorno e leitura de intervalos de tempo', icone: 'fa-ruler-combined' },
+            'estatistica': { titulo: 'Estatística e Probabilidade', subtitulo: 'Frequência de eventos, leitura e construção de tabelas', icone: 'fa-chart-pie' }
+        };
+
+        // Função de navegação por ID e Botão
+        function navegarPara(id, titulo, elementoBotao) {
+            // 1. Ocultar todos os módulos
+            const todosModulos = document.querySelectorAll('.modulo-conteudo');
+            todosModulos.forEach(mod => mod.classList.remove('ativo'));
+
+            // 2. Exibir o módulo solicitado
+            const alvo = document.getElementById('modulo-' + id);
+            if (alvo) {
+                alvo.classList.add('ativo');
+            }
+
+            // 3. Atualizar Título e Ícone no Topbar
+            const info = infoModulos[id] || { titulo: titulo, subtitulo: '', icone: 'fa-book-open' };
+            document.getElementById('titulo-pagina').innerText = info.titulo;
+            document.getElementById('subtitulo-pagina').innerText = info.subtitulo;
+            document.getElementById('icone-cabecalho').innerHTML = `<i class="fa-solid ${info.icone}"></i>`;
+
+            // 4. Atualizar destaque no menu lateral
+            const todosBotoes = document.querySelectorAll('.menu-btn');
+            todosBotoes.forEach(b => b.classList.remove('ativo'));
+
+            if (elementoBotao) {
+                elementoBotao.classList.add('ativo');
+            } else {
+                // Selecionar o botão correspondente se chamado programaticamente
+                const botoes = Array.from(todosBotoes);
+                const botaoCorrespondente = botoes.find(b => b.getAttribute('onclick')?.includes(`'${id}'`));
+                if (botaoCorrespondente) botaoCorrespondente.classList.add('ativo');
+            }
+
+            // Rolar a tela para o topo
+            document.getElementById('container-conteudo').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Navegação simplificada a partir dos cards do início
+        function navegarPorId(id) {
+            navegarPara(id, infoModulos[id]?.titulo || id, null);
+        }
+
+        function alternarTelaCheia() {
+            const doc = window.document;
+            const docEl = doc.documentElement;
+            const icone = document.getElementById('icone-tela-cheia');
+
+            const isFull = doc.fullscreenElement || doc.mozFullScreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement;
+            const requestFS = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            const exitFS = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+            if (!isFull) {
+                if (requestFS) requestFS.call(docEl);
+                icone.classList.replace('fa-expand', 'fa-compress');
+            } else {
+                if (exitFS) exitFS.call(doc);
+                icone.classList.replace('fa-compress', 'fa-expand');
+            }
+        }
+
+        const lousaContainer = document.getElementById('lousa-container');
+        const lousaCanvas = document.getElementById('lousa-canvas');
+        const lousaCtx = lousaCanvas.getContext('2d');
+        let desenhando = false;
+        let corCaneta = '#ef4444'; // Vermelho padrão
+        let espessuraCaneta = 4;
+
+        function redimensionarCanvas() {
+            lousaCanvas.width = window.innerWidth;
+            lousaCanvas.height = window.innerHeight;
+            lousaCtx.lineCap = 'round';
+            lousaCtx.lineJoin = 'round';
+        }
+        window.addEventListener('resize', redimensionarCanvas);
+        redimensionarCanvas();
+
+        function alternarLousa() {
+            const ativa = lousaContainer.classList.contains('hidden');
+            const btn = document.getElementById('btn-toggle-lousa');
+
+            if (ativa) {
+                lousaContainer.classList.remove('hidden');
+                redimensionarCanvas();
+                btn.classList.add('ring-4', 'ring-amber-300');
+            } else {
+                lousaContainer.classList.add('hidden');
+                btn.classList.remove('ring-4', 'ring-amber-300');
+            }
+        }
+
+        function mudarCorCaneta(cor, elemento) {
+            corCaneta = cor;
+            document.querySelectorAll('#lousa-container button[class*="rounded-full"]').forEach(b => {
+                b.classList.remove('ring-2', 'ring-white');
+            });
+            if (elemento) elemento.classList.add('ring-2', 'ring-white');
+        }
+
+        function limparLousa() {
+            lousaCtx.clearRect(0, 0, lousaCanvas.width, lousaCanvas.height);
+        }
+
+        // Eventos de Desenho (Mouse e Toque)
+        function iniciarDesenho(e) {
+            desenhando = true;
+            lousaCtx.strokeStyle = corCaneta;
+            lousaCtx.lineWidth = espessuraCaneta;
+            lousaCtx.beginPath();
+            const pos = obterPosicao(e);
+            lousaCtx.moveTo(pos.x, pos.y);
+        }
+
+        function desenhar(e) {
+            if (!desenhando) return;
+            const pos = obterPosicao(e);
+            lousaCtx.lineTo(pos.x, pos.y);
+            lousaCtx.stroke();
+        }
+
+        function pararDesenho() {
+            desenhando = false;
+        }
+
+        function obterPosicao(e) {
+            if (e.touches && e.touches.length > 0) {
+                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+            return { x: e.clientX, y: e.clientY };
+        }
+
+        lousaCanvas.addEventListener('mousedown', iniciarDesenho);
+        lousaCanvas.addEventListener('mousemove', desenhar);
+        window.addEventListener('mouseup', pararDesenho);
+
+        lousaCanvas.addEventListener('touchstart', iniciarDesenho, { passive: false });
+        lousaCanvas.addEventListener('touchmove', desenhar, { passive: false });
+        window.addEventListener('touchend', pararDesenho);
+
+        /* ==========================================================================
+           LÓGICA DO LABORATÓRIO DE PORCENTAGEM (5º ANO - BNCC EF05MA06)
+           ========================================================================== */
+
+        // Estado reativo da Porcentagem
+        let estadoPct = {
+            valor: 50,
+            quadradosManuais: null // array de booleans se o usuário pintar manualmente
+        };
+
+        // Estado da Cantina / Loja
+        let estadoLoja = {
+            produtoNome: 'Mochila Escolar',
+            precoOriginal: 80,
+            descontoPct: 50
+        };
+
+        // Base de perguntas pedagógicas do 5º Ano
+        const desafiosPorcentagem = [
+            {
+                pergunta: "Em uma turma de 30 alunos, 50% são meninas. Quantas meninas há na turma?",
+                opcoes: ["10 meninas", "15 meninas", "20 meninas", "25 meninas"],
+                correta: 1,
+                explicacao: "50% é a metade! A metade de 30 é 15."
+            },
+            {
+                pergunta: "Qual fração representa exatamente a mesma quantidade que 25%?",
+                opcoes: ["1/2", "1/4", "1/10", "3/4"],
+                correta: 1,
+                explicacao: "25% é a quarta parte (25 ÷ 100 simplificado por 25 = 1/4)."
+            },
+            {
+                pergunta: "Um jogo de tabuleiro custa R$ 60,00. Se ele tiver 10% de desconto, de quantos reais é o desconto?",
+                opcoes: ["R$ 6,00", "R$ 10,00", "R$ 12,00", "R$ 30,00"],
+                correta: 0,
+                explicacao: "10% é a décima parte! R$ 60 ÷ 10 = R$ 6,00 de desconto."
+            },
+            {
+                pergunta: "O que significa dizer que uma bateria está com 100% de carga?",
+                opcoes: ["Falta carregar a metade", "Tem 10 de cada 100 partes", "A bateria está totalmente cheia (o total inteiro)", "A bateria está descarregada"],
+                correta: 2,
+                explicacao: "100% representa a totalidade, ou seja, 1 inteiro completo!"
+            },
+            {
+                pergunta: "Se uma barra de chocolate tem 100 pedacinhos e você comeu 75%, quantos pedacinhos você comeu?",
+                opcoes: ["25 pedacinhos", "50 pedacinhos", "75 pedacinhos", "100 pedacinhos"],
+                correta: 2,
+                explicacao: "75% significa exatamente 75 de cada 100 partes!"
+            }
+        ];
+        let indiceDesafioAtual = 0;
+
+        /* Alternar entre as sub-abas do módulo de números */
+        function alternarSubAbaNumeros(aba) {
+            const abas = ['porcentagem', 'loja', 'desafio'];
+            abas.forEach(nome => {
+                const elemento = document.getElementById('subaba-' + nome);
+                const botao = document.getElementById('tab-btn-' + nome);
+                if (elemento) {
+                    if (nome === aba) {
+                        elemento.classList.remove('hidden');
+                        if (botao) {
+                            botao.className = "px-5 py-2.5 bg-amber-500 text-white font-kids font-semibold text-base rounded-xl shadow-md shadow-amber-200 flex items-center gap-2 transition";
+                        }
+                    } else {
+                        elemento.classList.add('hidden');
+                        if (botao) {
+                            botao.className = "px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-kids font-semibold text-base rounded-xl flex items-center gap-2 transition";
+                        }
+                    }
+                }
+            });
+
+            if (aba === 'desafio') {
+                gerarNovoDesafio();
+            }
+        }
+
+        /* Inicializar a Grade de 100 Blocos (10x10) */
+        function gerarGrade100() {
+            const container = document.getElementById('grade-100');
+            if (!container) return;
+            container.innerHTML = '';
+
+            for (let i = 0; i < 100; i++) {
+                const bloco = document.createElement('div');
+                bloco.id = `bloco-${i}`;
+                bloco.className = 'w-full h-full rounded-[4px] cursor-pointer transition-all duration-150 bg-slate-200 hover:scale-110';
+                bloco.title = `Bloco ${i + 1} de 100 (1%)`;
+                bloco.onclick = () => alternarBlocoManual(i);
+                container.appendChild(bloco);
+            }
+            atualizarVisualizadores();
+        }
+
+        /* Alternar cor de um bloco individualmente por clique */
+        function alternarBlocoManual(idx) {
+            if (!estadoPct.quadradosManuais) {
+                estadoPct.quadradosManuais = Array(100).fill(false);
+                for (let i = 0; i < estadoPct.valor; i++) {
+                    estadoPct.quadradosManuais[i] = true;
+                }
+            }
+            estadoPct.quadradosManuais[idx] = !estadoPct.quadradosManuais[idx];
+            
+            // Recalcular porcentagem total
+            const totalPintados = estadoPct.quadradosManuais.filter(Boolean).length;
+            estadoPct.valor = totalPintados;
+            atualizarVisualizadores(true);
+        }
+
+        /* Definir porcentagem pelos botões ou slider */
+        function definirPorcentagem(val) {
+            estadoPct.valor = Math.min(100, Math.max(0, parseInt(val, 10)));
+            estadoPct.quadradosManuais = null; // volta para modo sequencial
+            atualizarVisualizadores();
+        }
+
+        function ajustarPorcentagemPeloSlider(val) {
+            definirPorcentagem(val);
+        }
+
+        function limparOuPreencherGrade() {
+            if (estadoPct.valor > 0) {
+                definirPorcentagem(0);
+                document.getElementById('btn-toggle-grade').innerText = "Preencher 100%";
+            } else {
+                definirPorcentagem(100);
+                document.getElementById('btn-toggle-grade').innerText = "Zerar Grade";
+            }
+        }
+
+        /* Atualização síncrona de todos os componentes na tela */
+        function atualizarVisualizadores(isManual = false) {
+            const v = estadoPct.valor;
+
+            // 1. Display e Slider
+            const displayEl = document.getElementById('display-porcentagem');
+            const sliderEl = document.getElementById('slider-porcentagem');
+            if (displayEl) displayEl.innerText = v;
+            if (sliderEl && !isManual) sliderEl.value = v;
+
+            // 2. Pintar Grade de 100
+            for (let i = 0; i < 100; i++) {
+                const el = document.getElementById(`bloco-${i}`);
+                if (el) {
+                    const ativo = estadoPct.quadradosManuais ? estadoPct.quadradosManuais[i] : i < v;
+                    if (ativo) {
+                        el.className = 'w-full h-full rounded-[4px] cursor-pointer transition-all duration-150 bg-amber-500 shadow-sm';
+                    } else {
+                        el.className = 'w-full h-full rounded-[4px] cursor-pointer transition-all duration-150 bg-slate-200 hover:bg-slate-300';
+                    }
+                }
+            }
+            const pintadosEl = document.getElementById('contagem-pintados');
+            const vaziosEl = document.getElementById('contagem-vazios');
+            if (pintadosEl) pintadosEl.innerText = v;
+            if (vaziosEl) vaziosEl.innerText = 100 - v;
+
+            // 3. Bateria do Celular
+            const bateriaBarra = document.getElementById('barra-bateria-nivel');
+            const bateriaTexto = document.getElementById('status-bateria-texto');
+            if (bateriaBarra && bateriaTexto) {
+                bateriaBarra.style.width = `${v}%`;
+                if (v <= 20) {
+                    bateriaBarra.className = 'h-full bg-red-500 rounded-lg transition-all duration-300 flex items-center justify-end pr-2 text-white font-bold text-xs';
+                    bateriaTexto.innerText = "Bateria Fraca!";
+                    bateriaTexto.className = "text-red-600 font-bold";
+                } else if (v <= 50) {
+                    bateriaBarra.className = 'h-full bg-amber-500 rounded-lg transition-all duration-300 flex items-center justify-end pr-2 text-white font-bold text-xs';
+                    bateriaTexto.innerText = "Bateria Média";
+                    bateriaTexto.className = "text-amber-600 font-bold";
+                } else {
+                    bateriaBarra.className = 'h-full bg-emerald-500 rounded-lg transition-all duration-300 flex items-center justify-end pr-2 text-white font-bold text-xs';
+                    bateriaTexto.innerText = "Bateria Cheia";
+                    bateriaTexto.className = "text-emerald-600 font-bold";
+                }
+            }
+
+            // 4. Pizza SVG
+            const pizzaSetor = document.getElementById('svg-pizza-setor');
+            const pizzaTexto = document.getElementById('svg-pizza-texto');
+            if (pizzaSetor) pizzaSetor.setAttribute('stroke-dasharray', `${v}, 100`);
+            if (pizzaTexto) pizzaTexto.innerText = `${v}%`;
+
+            // 5. Cartão de Equivalências e Dica BNCC
+            const equivPct = document.getElementById('card-equiv-pct');
+            const equivFrac = document.getElementById('card-equiv-frac');
+            const equivDec = document.getElementById('card-equiv-dec');
+            const dicaMental = document.getElementById('card-dica-mental');
+            const legendaSig = document.getElementById('legenda-significado');
+
+            if (equivPct) equivPct.innerText = `${v}%`;
+            if (equivDec) equivDec.innerText = (v / 100).toFixed(2).replace('.', ',');
+
+            // Cálculo da fração irredutível simples
+            if (equivFrac && dicaMental && legendaSig) {
+                if (v === 0) {
+                    equivFrac.innerText = "0";
+                    dicaMental.innerHTML = "0% significa <strong>nenhuma parte</strong> de 100.";
+                    legendaSig.innerText = "Nenhum pedaço preenchido.";
+                } else if (v === 10) {
+                    equivFrac.innerText = "1/10";
+                    dicaMental.innerHTML = "Para calcular 10%, basta <strong>dividir o número por 10</strong> (décima parte)!";
+                    legendaSig.innerText = "Representa a décima parte do total.";
+                } else if (v === 25) {
+                    equivFrac.innerText = "1/4";
+                    dicaMental.innerHTML = "Para calcular 25%, divida por 2 e depois por 2 de novo (<strong>metade da metade</strong>)!";
+                    legendaSig.innerText = "Representa a quarta parte (1 de cada 4 partes).";
+                } else if (v === 50) {
+                    equivFrac.innerText = "1/2";
+                    dicaMental.innerHTML = "Para calcular 50%, basta <strong>dividir por 2</strong> (achar a metade exata)!";
+                    legendaSig.innerText = "Representa exatamente a metade do total.";
+                } else if (v === 75) {
+                    equivFrac.innerText = "3/4";
+                    dicaMental.innerHTML = "Para calcular 75%, calcule a metade (50%) + a metade da metade (25%)!";
+                    legendaSig.innerText = "Representa três quartos (3 partes de 4).";
+                } else if (v === 100) {
+                    equivFrac.innerText = "1";
+                    dicaMental.innerHTML = "100% é <strong>tudo</strong>! É o inteiro completo, sem tirar nada.";
+                    legendaSig.innerText = "Representa o total inteiro (100 de 100).";
+                } else {
+                    equivFrac.innerText = `${v}/100`;
+                    dicaMental.innerHTML = `${v}% equivale a pegar <strong>${v} pedacinhos</strong> de um total de 100.`;
+                    legendaSig.innerText = `Representa ${v} de cada 100 partes.`;
+                }
+            }
+
+            // Atualizar destaque dos botões BNCC
+            document.querySelectorAll('.btn-pct').forEach(btn => {
+                const text = btn.querySelector('.text-lg')?.innerText;
+                if (text === `${v}%`) {
+                    btn.className = 'btn-pct p-3 rounded-2xl border-2 border-amber-500 bg-amber-50 font-kids font-bold text-amber-700 transition flex flex-col items-center shadow-sm';
+                } else {
+                    btn.className = 'btn-pct p-3 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50 hover:bg-amber-50 font-kids font-bold text-slate-700 transition flex flex-col items-center';
+                }
+            });
+        }
+
+        /* Lógica da Cantina Escolar & Descontos */
+        function selecionarProdutoLoja(nome, preco, icone, btnEl) {
+            estadoLoja.produtoNome = nome;
+            estadoLoja.precoOriginal = preco;
+
+            document.querySelectorAll('.btn-produto').forEach(b => {
+                b.className = 'btn-produto p-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 bg-slate-50 text-left transition hover:scale-102';
+            });
+            if (btnEl) {
+                btnEl.className = 'btn-produto p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-left transition hover:scale-102';
+            }
+            atualizarTelaLoja();
+        }
+
+        function aplicarDescontoLoja(pct, btnEl) {
+            estadoLoja.descontoPct = pct;
+
+            document.querySelectorAll('.btn-desconto').forEach(b => {
+                b.className = 'btn-desconto p-3.5 rounded-2xl border-2 border-slate-200 hover:border-emerald-400 font-kids font-bold text-slate-700 text-base transition';
+            });
+            if (btnEl) {
+                btnEl.className = 'btn-desconto p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-kids font-bold text-emerald-800 text-base transition shadow-sm';
+            }
+            atualizarTelaLoja();
+        }
+
+        function formatarMoeda(val) {
+            return `R$ ${val.toFixed(2).replace('.', ',')}`;
+        }
+
+        function atualizarTelaLoja() {
+            const pOriginal = estadoLoja.precoOriginal;
+            const pct = estadoLoja.descontoPct;
+            const valorDesconto = (pOriginal * pct) / 100;
+            const precoFinal = pOriginal - valorDesconto;
+
+            document.getElementById('loja-resumo-produto').innerText = estadoLoja.produtoNome;
+            document.getElementById('loja-preco-original').innerText = formatarMoeda(pOriginal);
+            document.getElementById('loja-texto-desconto').innerText = `Desconto (${pct}%):`;
+            document.getElementById('loja-valor-desconto').innerText = `- ${formatarMoeda(valorDesconto)}`;
+            document.getElementById('loja-preco-final').innerText = formatarMoeda(precoFinal);
+
+            // Gerar Raciocínio Mental Didático para a Prova/TV
+            const passoContainer = document.getElementById('loja-passo-a-passo');
+            if (pct === 50) {
+                passoContainer.innerHTML = `
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                        <p>50% significa exatamente a <strong>metade</strong> do valor total.</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                        <p>A metade de ${formatarMoeda(pOriginal)} é <strong>${formatarMoeda(valorDesconto)}</strong> (${pOriginal} ÷ 2).</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                        <p>Subtraindo: ${formatarMoeda(pOriginal)} - ${formatarMoeda(valorDesconto)} = <strong>${formatarMoeda(precoFinal)} a pagar!</strong></p>
+                    </div>
+                `;
+            } else if (pct === 10) {
+                passoContainer.innerHTML = `
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                        <p>10% é a <strong>décima parte</strong> do valor (dividir por 10).</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                        <p>${formatarMoeda(pOriginal)} dividido por 10 = <strong>${formatarMoeda(valorDesconto)} de desconto</strong>.</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                        <p>Subtraindo: ${formatarMoeda(pOriginal)} - ${formatarMoeda(valorDesconto)} = <strong>${formatarMoeda(precoFinal)} a pagar!</strong></p>
+                    </div>
+                `;
+            } else if (pct === 25) {
+                passoContainer.innerHTML = `
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                        <p>25% é a <strong>quarta parte</strong>, ou seja, a metade da metade!</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                        <p>A metade de ${formatarMoeda(pOriginal)} é ${formatarMoeda(pOriginal / 2)}. E a metade de ${formatarMoeda(pOriginal / 2)} é <strong>${formatarMoeda(valorDesconto)}</strong>.</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                        <p>Preço final: ${formatarMoeda(pOriginal)} - ${formatarMoeda(valorDesconto)} = <strong>${formatarMoeda(precoFinal)}</strong>.</p>
+                    </div>
+                `;
+            } else if (pct === 75) {
+                passoContainer.innerHTML = `
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                        <p>75% é o mesmo que somar <strong>50% (metade) + 25% (quarta parte)</strong>.</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                        <p>Ou seja: se o desconto é de 75%, você paga apenas <strong>25% do valor</strong>!</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                        <p>Economia enorme de ${formatarMoeda(valorDesconto)}. Pagará só <strong>${formatarMoeda(precoFinal)}</strong>.</p>
+                    </div>
+                `;
+            }
+        }
+
+        /* Lógica do Quiz / Desafio da TV */
+        function gerarNovoDesafio() {
+            // Selecionar pergunta aleatória sem repetir imediatamente a mesma
+            let novoIndice;
+            do {
+                novoIndice = Math.floor(Math.random() * desafiosPorcentagem.length);
+            } while (novoIndice === indiceDesafioAtual && desafiosPorcentagem.length > 1);
+
+            indiceDesafioAtual = novoIndice;
+            const item = desafiosPorcentagem[indiceDesafioAtual];
+
+            document.getElementById('desafio-pergunta').innerText = item.pergunta;
+            const feedbackEl = document.getElementById('desafio-feedback');
+            feedbackEl.className = "hidden";
+
+            const opcoesContainer = document.getElementById('desafio-opcoes');
+            opcoesContainer.innerHTML = '';
+
+            item.opcoes.forEach((opcao, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-5 rounded-2xl border-2 border-slate-200 hover:border-indigo-500 bg-slate-50 hover:bg-indigo-50 font-kids font-bold text-slate-800 text-lg md:text-xl transition active:scale-95 shadow-sm text-center";
+                btn.innerText = opcao;
+                btn.onclick = () => verificarRespostaDesafio(idx, btn);
+                opcoesContainer.appendChild(btn);
+            });
+        }
+
+        function verificarRespostaDesafio(escolha, btnElemento) {
+            const item = desafiosPorcentagem[indiceDesafioAtual];
+            const feedbackEl = document.getElementById('desafio-feedback');
+            const todosBotoes = document.querySelectorAll('#desafio-opcoes button');
+
+            // Desabilitar cliques subsequentes
+            todosBotoes.forEach(b => b.disabled = true);
+
+            if (escolha === item.correta) {
+                btnElemento.className = "p-5 rounded-2xl border-2 border-emerald-500 bg-emerald-100 text-emerald-900 font-kids font-bold text-lg md:text-xl shadow-md";
+                feedbackEl.className = "p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-base font-bold flex items-center justify-center gap-2 animate-bounce";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i> Parabéns, resposta correta! ${item.explicacao}`;
+            } else {
+                btnElemento.className = "p-5 rounded-2xl border-2 border-rose-500 bg-rose-100 text-rose-900 font-kids font-bold text-lg md:text-xl";
+                // Destacar o correto
+                if (todosBotoes[item.correta]) {
+                    todosBotoes[item.correta].className = "p-5 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-kids font-bold text-lg md:text-xl";
+                }
+                feedbackEl.className = "p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 text-base font-bold flex items-center justify-center gap-2";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i> Quase lá! Vamos analisar: ${item.explicacao}`;
+            }
+        }
+
+        // Inicializar a grade de 100 blocos ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            gerarGrade100();
+            atualizarTelaLoja();
+        });
+    </script>
+</body>
+</html>
