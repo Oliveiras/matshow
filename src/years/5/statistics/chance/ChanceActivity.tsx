@@ -1,3 +1,96 @@
-import{useState}from'react';import{ActivityWithChallenge,type ChallengeQuestion}from'../../../../components/ui/ActivityWithChallenge'
-const q:ChallengeQuestion[]=[{question:'Em um dado de 6 lados, P(3) é...',options:['1/2','1/3','1/6','3/6'],answer:2,explanation:'Há um resultado favorável em seis possíveis.'},{question:'Cara ou coroa tem quantos resultados?',options:['1','2','3','4'],answer:1,explanation:'Cara e coroa.'},{question:'Em um dado, sair 7 é...',options:['certo','provável','impossível','equiprovável'],answer:2,explanation:'O espaço amostral vai de 1 a 6.'},{question:'Qual evento é certo em um dado comum?',options:['sair 2','sair número de 1 a 6','sair 8','sair par'],answer:1,explanation:'Todo resultado pertence a 1,2,3,4,5,6.'},{question:'P(sair par) em um dado é...',options:['1/6','2/6','3/6','6/6'],answer:2,explanation:'Há três pares: 2, 4 e 6.'}]
-export function ChanceActivity(){const[sides,setSides]=useState(6);const[counts,setCounts]=useState<number[]>(Array(6).fill(0));function change(n:number){setSides(n);setCounts(Array(n).fill(0))}function roll(times:number){const next=[...counts];for(let i=0;i<times;i++)next[Math.floor(Math.random()*sides)]++;setCounts(next)}const total=counts.reduce((a,b)=>a+b,0);return <ActivityWithChallenge questions={q}><article className="panel activity"><header><p className="eyebrow">Espaço amostral</p><h2>Laboratório do acaso</h2></header><div className="quick-values">{[4,6,8].map(n=><button key={n} className={sides===n?'active':''} onClick={()=>change(n)}>Dado de {n} lados</button>)}</div><p className="sample-space">Resultados: {Array.from({length:sides},(_,i)=>i+1).join(', ')}</p><p className="math-sentence">P(de um resultado) = 1/{sides}</p><div className="quick-values"><button onClick={()=>roll(1)}>Lançar 1×</button><button onClick={()=>roll(100)}>Lançar 100×</button></div>{total>0&&<div className="mini-chart">{counts.map((count,i)=><div key={i}><span style={{height:`${Math.max(4,count/Math.max(...counts)*130)}px`}}/><strong>{i+1}</strong><small>{count}</small></div>)}</div>}</article></ActivityWithChallenge>}
+import { useState } from "react";
+import {
+  ActivityWithChallenge,
+  type ChallengeQuestion,
+} from "../../../../components/ui/ActivityWithChallenge";
+const q: ChallengeQuestion[] = [
+  {
+    question: "Em um dado de 6 lados, P(3) é...",
+    options: ["1/2", "1/3", "1/6", "3/6"],
+    answer: 2,
+    explanation: "Há um resultado favorável em seis possíveis.",
+  },
+  {
+    question: "Cara ou coroa tem quantos resultados?",
+    options: ["1", "2", "3", "4"],
+    answer: 1,
+    explanation: "Cara e coroa.",
+  },
+  {
+    question: "Em um dado, sair 7 é...",
+    options: ["certo", "provável", "impossível", "equiprovável"],
+    answer: 2,
+    explanation: "O espaço amostral vai de 1 a 6.",
+  },
+  {
+    question: "Qual evento é certo em um dado comum?",
+    options: ["sair 2", "sair número de 1 a 6", "sair 8", "sair par"],
+    answer: 1,
+    explanation: "Todo resultado pertence a 1,2,3,4,5,6.",
+  },
+  {
+    question: "P(sair par) em um dado é...",
+    options: ["1/6", "2/6", "3/6", "6/6"],
+    answer: 2,
+    explanation: "Há três pares: 2, 4 e 6.",
+  },
+];
+export function ChanceActivity() {
+  const [sides, setSides] = useState(6);
+  const [counts, setCounts] = useState<number[]>(Array(6).fill(0));
+  function change(n: number) {
+    setSides(n);
+    setCounts(Array(n).fill(0));
+  }
+  function roll(times: number) {
+    const next = [...counts];
+    for (let i = 0; i < times; i++) next[Math.floor(Math.random() * sides)]++;
+    setCounts(next);
+  }
+  const total = counts.reduce((a, b) => a + b, 0);
+  return (
+    <ActivityWithChallenge questions={q}>
+      <article className="panel activity">
+        <header>
+          <p className="eyebrow">Espaço amostral</p>
+          <h2>Laboratório do acaso</h2>
+        </header>
+        <div className="quick-values">
+          {[4, 6, 8].map((n) => (
+            <button
+              key={n}
+              className={sides === n ? "active" : ""}
+              onClick={() => change(n)}
+            >
+              Dado de {n} lados
+            </button>
+          ))}
+        </div>
+        <p className="sample-space">
+          Resultados:{" "}
+          {Array.from({ length: sides }, (_, i) => i + 1).join(", ")}
+        </p>
+        <p className="math-sentence">P(de um resultado) = 1/{sides}</p>
+        <div className="quick-values">
+          <button onClick={() => roll(1)}>Lançar 1×</button>
+          <button onClick={() => roll(100)}>Lançar 100×</button>
+        </div>
+        {total > 0 && (
+          <div className="mini-chart">
+            {counts.map((count, i) => (
+              <div key={i}>
+                <span
+                  style={{
+                    height: `${Math.max(4, (count / Math.max(...counts)) * 130)}px`,
+                  }}
+                />
+                <strong>{i + 1}</strong>
+                <small>{count}</small>
+              </div>
+            ))}
+          </div>
+        )}
+      </article>
+    </ActivityWithChallenge>
+  );
+}

@@ -1,1 +1,21 @@
-import{home,plannedModules}from'../shared';export const year3Modules=[home(3),...plannedModules([['numeros','Números e operações','123','Sistema decimal, cálculo e problemas.'],['algebra','Regularidades','=','Sequências e relações de igualdade.'],['geometria','Geometria','◇','Localização, trajetos e figuras geométricas.'],['medidas','Medidas','⌁','Grandezas e comparação de áreas.'],['dados','Estatística','▥','Leitura de dados e análise de chances.']])]
+import { home, plannedModules } from "../shared";
+export const year3Modules = [
+  home(3),
+  ...plannedModules([
+    [
+      "numeros",
+      "Números e operações",
+      "123",
+      "Sistema decimal, cálculo e problemas.",
+    ],
+    ["algebra", "Regularidades", "=", "Sequências e relações de igualdade."],
+    [
+      "geometria",
+      "Geometria",
+      "◇",
+      "Localização, trajetos e figuras geométricas.",
+    ],
+    ["medidas", "Medidas", "⌁", "Grandezas e comparação de áreas."],
+    ["dados", "Estatística", "▥", "Leitura de dados e análise de chances."],
+  ]),
+];

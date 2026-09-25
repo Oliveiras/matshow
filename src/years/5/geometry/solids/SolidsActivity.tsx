@@ -1,4 +1,102 @@
-import{useState}from'react';import{ActivityWithChallenge,type ChallengeQuestion}from'../../../../components/ui/ActivityWithChallenge'
-const q:ChallengeQuestion[]=[{question:'Quantas faces tem um cubo?',options:['4','6','8','12'],answer:1,explanation:'O cubo tem 6 faces quadradas.'},{question:'Qual sólido tem duas bases circulares?',options:['Cone','Pirâmide','Cilindro','Cubo'],answer:2,explanation:'O cilindro tem duas bases circulares.'},{question:'Uma pirâmide de base quadrada tem quantos vértices?',options:['4','5','6','8'],answer:1,explanation:'Quatro na base e um no topo.'},{question:'Qual planificação forma um cubo?',options:['6 quadrados conectados','2 círculos','1 triângulo','4 retângulos soltos'],answer:0,explanation:'As seis faces do cubo são quadradas.'},{question:'O cone possui quantos vértices?',options:['0','1','2','4'],answer:1,explanation:'O ápice é seu único vértice.'}]
-const solids=[{name:'Cubo',emoji:'🧊',faces:6,edges:12,vertices:8,net:'▦'},{name:'Prisma triangular',emoji:'⛺',faces:5,edges:9,vertices:6,net:'▱'},{name:'Pirâmide',emoji:'🔺',faces:5,edges:8,vertices:5,net:'✣'},{name:'Cilindro',emoji:'🥫',faces:3,edges:2,vertices:0,net:'◉▭◉'}]
-export function SolidsActivity(){const[index,setIndex]=useState(0);const solid=solids[index];return <ActivityWithChallenge questions={q}><article className="panel activity"><header><p className="eyebrow">Figuras espaciais</p><h2>Sólidos e planificações</h2></header><div className="solid-stage"><div className="solid-shape">{solid.emoji}</div><div className="solid-net">{solid.net}</div></div><div className="solid-facts"><span>Faces<strong>{solid.faces}</strong></span><span>Arestas<strong>{solid.edges}</strong></span><span>Vértices<strong>{solid.vertices}</strong></span></div><div className="quick-values">{solids.map((item,i)=><button key={item.name} className={index===i?'active':''} onClick={()=>setIndex(i)}>{item.name}</button>)}</div></article></ActivityWithChallenge>}
+import { useState } from "react";
+import {
+  ActivityWithChallenge,
+  type ChallengeQuestion,
+} from "../../../../components/ui/ActivityWithChallenge";
+const q: ChallengeQuestion[] = [
+  {
+    question: "Quantas faces tem um cubo?",
+    options: ["4", "6", "8", "12"],
+    answer: 1,
+    explanation: "O cubo tem 6 faces quadradas.",
+  },
+  {
+    question: "Qual sólido tem duas bases circulares?",
+    options: ["Cone", "Pirâmide", "Cilindro", "Cubo"],
+    answer: 2,
+    explanation: "O cilindro tem duas bases circulares.",
+  },
+  {
+    question: "Uma pirâmide de base quadrada tem quantos vértices?",
+    options: ["4", "5", "6", "8"],
+    answer: 1,
+    explanation: "Quatro na base e um no topo.",
+  },
+  {
+    question: "Qual planificação forma um cubo?",
+    options: [
+      "6 quadrados conectados",
+      "2 círculos",
+      "1 triângulo",
+      "4 retângulos soltos",
+    ],
+    answer: 0,
+    explanation: "As seis faces do cubo são quadradas.",
+  },
+  {
+    question: "O cone possui quantos vértices?",
+    options: ["0", "1", "2", "4"],
+    answer: 1,
+    explanation: "O ápice é seu único vértice.",
+  },
+];
+const solids = [
+  { name: "Cubo", emoji: "🧊", faces: 6, edges: 12, vertices: 8, net: "▦" },
+  {
+    name: "Prisma triangular",
+    emoji: "⛺",
+    faces: 5,
+    edges: 9,
+    vertices: 6,
+    net: "▱",
+  },
+  { name: "Pirâmide", emoji: "🔺", faces: 5, edges: 8, vertices: 5, net: "✣" },
+  {
+    name: "Cilindro",
+    emoji: "🥫",
+    faces: 3,
+    edges: 2,
+    vertices: 0,
+    net: "◉▭◉",
+  },
+];
+export function SolidsActivity() {
+  const [index, setIndex] = useState(0);
+  const solid = solids[index];
+  return (
+    <ActivityWithChallenge questions={q}>
+      <article className="panel activity">
+        <header>
+          <p className="eyebrow">Figuras espaciais</p>
+          <h2>Sólidos e planificações</h2>
+        </header>
+        <div className="solid-stage">
+          <div className="solid-shape">{solid.emoji}</div>
+          <div className="solid-net">{solid.net}</div>
+        </div>
+        <div className="solid-facts">
+          <span>
+            Faces<strong>{solid.faces}</strong>
+          </span>
+          <span>
+            Arestas<strong>{solid.edges}</strong>
+          </span>
+          <span>
+            Vértices<strong>{solid.vertices}</strong>
+          </span>
+        </div>
+        <div className="quick-values">
+          {solids.map((item, i) => (
+            <button
+              key={item.name}
+              className={index === i ? "active" : ""}
+              onClick={() => setIndex(i)}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+      </article>
+    </ActivityWithChallenge>
+  );
+}

@@ -7,19 +7,22 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"*.md\" \"docs/**/*.md\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.md\" \"docs/**/*.md\"",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "test": "vitest run"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "prettier": "^3.9.9",
     "typescript": "latest",
     "vitest": "latest"
   }

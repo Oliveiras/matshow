@@ -1,3 +1,82 @@
-import{useState}from'react';import{ActivityWithChallenge,type ChallengeQuestion}from'../../../../components/ui/ActivityWithChallenge'
-const q:ChallengeQuestion[]=[{question:'8, 5, 10 e 7 votos totalizam...',options:['20','25','30','35'],answer:2,explanation:'8 + 5 + 10 + 7 = 30.'},{question:'A categoria com maior barra é a...',options:['menos frequente','mais frequente','média','impossível'],answer:1,explanation:'A altura representa a frequência.'},{question:'Variável “esporte favorito” é...',options:['categórica','numérica contínua','uma medida','um cálculo'],answer:0,explanation:'Os valores são categorias.'},{question:'Para mostrar mudança ao longo do tempo, é útil um gráfico de...',options:['linhas','apenas texto','formas','frações'],answer:0,explanation:'Linhas evidenciam variações temporais.'},{question:'Uma síntese de pesquisa deve...',options:['inventar dados','apresentar conclusões apoiadas nos dados','apagar categorias','mostrar só o título'],answer:1,explanation:'A conclusão precisa corresponder aos dados coletados.'}]
-export function SurveyActivity(){const[data,setData]=useState([8,5,10,7]);const labels=['Futebol','Natação','Vôlei','Ciclismo'];function change(i:number,d:number){setData(v=>v.map((n,j)=>j===i?Math.max(0,n+d):n))}const max=Math.max(...data,1);return <ActivityWithChallenge questions={q}><article className="panel activity"><header><p className="eyebrow">Coletar e interpretar</p><h2>Pesquisa: esporte favorito</h2></header><div className="survey-layout"><div className="survey-table">{labels.map((label,i)=><div key={label}><strong>{label}</strong><button onClick={()=>change(i,-1)}>−</button><span>{data[i]}</span><button onClick={()=>change(i,1)}>+</button></div>)}</div><div className="bar-chart">{data.map((value,i)=><div key={labels[i]}><span style={{height:`${value/max*190}px`}}>{value}</span><small>{labels[i]}</small></div>)}</div></div></article></ActivityWithChallenge>}
+import { useState } from "react";
+import {
+  ActivityWithChallenge,
+  type ChallengeQuestion,
+} from "../../../../components/ui/ActivityWithChallenge";
+const q: ChallengeQuestion[] = [
+  {
+    question: "8, 5, 10 e 7 votos totalizam...",
+    options: ["20", "25", "30", "35"],
+    answer: 2,
+    explanation: "8 + 5 + 10 + 7 = 30.",
+  },
+  {
+    question: "A categoria com maior barra é a...",
+    options: ["menos frequente", "mais frequente", "média", "impossível"],
+    answer: 1,
+    explanation: "A altura representa a frequência.",
+  },
+  {
+    question: "Variável “esporte favorito” é...",
+    options: ["categórica", "numérica contínua", "uma medida", "um cálculo"],
+    answer: 0,
+    explanation: "Os valores são categorias.",
+  },
+  {
+    question: "Para mostrar mudança ao longo do tempo, é útil um gráfico de...",
+    options: ["linhas", "apenas texto", "formas", "frações"],
+    answer: 0,
+    explanation: "Linhas evidenciam variações temporais.",
+  },
+  {
+    question: "Uma síntese de pesquisa deve...",
+    options: [
+      "inventar dados",
+      "apresentar conclusões apoiadas nos dados",
+      "apagar categorias",
+      "mostrar só o título",
+    ],
+    answer: 1,
+    explanation: "A conclusão precisa corresponder aos dados coletados.",
+  },
+];
+export function SurveyActivity() {
+  const [data, setData] = useState([8, 5, 10, 7]);
+  const labels = ["Futebol", "Natação", "Vôlei", "Ciclismo"];
+  function change(i: number, d: number) {
+    setData((v) => v.map((n, j) => (j === i ? Math.max(0, n + d) : n)));
+  }
+  const max = Math.max(...data, 1);
+  return (
+    <ActivityWithChallenge questions={q}>
+      <article className="panel activity">
+        <header>
+          <p className="eyebrow">Coletar e interpretar</p>
+          <h2>Pesquisa: esporte favorito</h2>
+        </header>
+        <div className="survey-layout">
+          <div className="survey-table">
+            {labels.map((label, i) => (
+              <div key={label}>
+                <strong>{label}</strong>
+                <button onClick={() => change(i, -1)}>−</button>
+                <span>{data[i]}</span>
+                <button onClick={() => change(i, 1)}>+</button>
+              </div>
+            ))}
+          </div>
+          <div className="bar-chart">
+            {data.map((value, i) => (
+              <div key={labels[i]}>
+                <span style={{ height: `${(value / max) * 190}px` }}>
+                  {value}
+                </span>
+                <small>{labels[i]}</small>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+    </ActivityWithChallenge>
+  );
+}

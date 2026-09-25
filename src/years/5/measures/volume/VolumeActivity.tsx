@@ -1,3 +1,96 @@
-import{useState}from'react';import{ActivityWithChallenge,type ChallengeQuestion}from'../../../../components/ui/ActivityWithChallenge'
-const q:ChallengeQuestion[]=[{question:'Bloco 3 × 2 × 2: quantos cubos?',options:['7','10','12','18'],answer:2,explanation:'3 × 2 × 2 = 12.'},{question:'Um cubo 2 × 2 × 2 tem volume...',options:['4','6','8','12'],answer:2,explanation:'2 × 2 × 2 = 8.'},{question:'Volume mede...',options:['o contorno','a superfície','o espaço ocupado','o peso'],answer:2,explanation:'Volume é o espaço ocupado pelo sólido.'},{question:'Uma camada 4 × 3 possui quantos cubos?',options:['7','12','14','24'],answer:1,explanation:'4 × 3 = 12 cubos por camada.'},{question:'3 camadas de 12 cubos totalizam...',options:['15','24','36','48'],answer:2,explanation:'3 × 12 = 36.'}]
-export function VolumeActivity(){const[w,setW]=useState(3);const[d,setD]=useState(2);const[h,setH]=useState(2);const count=w*d*h;return <ActivityWithChallenge questions={q}><article className="panel activity"><header><p className="eyebrow">Empilhamento de cubos</p><h2>Construtor de volume</h2></header><div className="dimension-controls"><label>Largura <input type="range" min="1" max="5" value={w} onChange={e=>setW(Number(e.target.value))}/><strong>{w}</strong></label><label>Profundidade <input type="range" min="1" max="5" value={d} onChange={e=>setD(Number(e.target.value))}/><strong>{d}</strong></label><label>Altura <input type="range" min="1" max="5" value={h} onChange={e=>setH(Number(e.target.value))}/><strong>{h}</strong></label></div><div className="cube-stack">{Array.from({length:count},(_,i)=><span key={i}>◼</span>)}</div><p className="math-sentence">{w} × {d} × {h} = {count} cubos</p></article></ActivityWithChallenge>}
+import { useState } from "react";
+import {
+  ActivityWithChallenge,
+  type ChallengeQuestion,
+} from "../../../../components/ui/ActivityWithChallenge";
+const q: ChallengeQuestion[] = [
+  {
+    question: "Bloco 3 × 2 × 2: quantos cubos?",
+    options: ["7", "10", "12", "18"],
+    answer: 2,
+    explanation: "3 × 2 × 2 = 12.",
+  },
+  {
+    question: "Um cubo 2 × 2 × 2 tem volume...",
+    options: ["4", "6", "8", "12"],
+    answer: 2,
+    explanation: "2 × 2 × 2 = 8.",
+  },
+  {
+    question: "Volume mede...",
+    options: ["o contorno", "a superfície", "o espaço ocupado", "o peso"],
+    answer: 2,
+    explanation: "Volume é o espaço ocupado pelo sólido.",
+  },
+  {
+    question: "Uma camada 4 × 3 possui quantos cubos?",
+    options: ["7", "12", "14", "24"],
+    answer: 1,
+    explanation: "4 × 3 = 12 cubos por camada.",
+  },
+  {
+    question: "3 camadas de 12 cubos totalizam...",
+    options: ["15", "24", "36", "48"],
+    answer: 2,
+    explanation: "3 × 12 = 36.",
+  },
+];
+export function VolumeActivity() {
+  const [w, setW] = useState(3);
+  const [d, setD] = useState(2);
+  const [h, setH] = useState(2);
+  const count = w * d * h;
+  return (
+    <ActivityWithChallenge questions={q}>
+      <article className="panel activity">
+        <header>
+          <p className="eyebrow">Empilhamento de cubos</p>
+          <h2>Construtor de volume</h2>
+        </header>
+        <div className="dimension-controls">
+          <label>
+            Largura{" "}
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={w}
+              onChange={(e) => setW(Number(e.target.value))}
+            />
+            <strong>{w}</strong>
+          </label>
+          <label>
+            Profundidade{" "}
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={d}
+              onChange={(e) => setD(Number(e.target.value))}
+            />
+            <strong>{d}</strong>
+          </label>
+          <label>
+            Altura{" "}
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={h}
+              onChange={(e) => setH(Number(e.target.value))}
+            />
+            <strong>{h}</strong>
+          </label>
+        </div>
+        <div className="cube-stack">
+          {Array.from({ length: count }, (_, i) => (
+            <span key={i}>◼</span>
+          ))}
+        </div>
+        <p className="math-sentence">
+          {w} × {d} × {h} = {count} cubos
+        </p>
+      </article>
+    </ActivityWithChallenge>
+  );
+}

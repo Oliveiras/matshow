@@ -37,6 +37,7 @@ Antes de concluir, executar:
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm format:check
 ```
 
 Atualize a especificação, a pesquisa e o planejamento quando uma decisão mudar. Não marque uma atividade como disponível até seus critérios de aceite serem verificados.

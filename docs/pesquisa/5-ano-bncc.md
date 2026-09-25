@@ -1,7 +1,7 @@
 # Matemática do 5º ano — levantamento curricular
 
 **Escopo:** Base Nacional Comum Curricular (BNCC), Matemática, 5º ano.  
-**Fonte principal:** BRASIL. Ministério da Educação. *Base Nacional Comum Curricular*. 2018, pp. 294–298.  
+**Fonte principal:** BRASIL. Ministério da Educação. _Base Nacional Comum Curricular_. 2018, pp. 294–298.  
 **Documento:** https://basenacionalcomum.mec.gov.br/images/BNCC_EI_EF_110518_versaofinal_site.pdf  
 **Acesso:** 2026-09-25.
 

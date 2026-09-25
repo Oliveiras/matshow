@@ -1,3 +1,96 @@
-import{useState}from'react';import{ActivityWithChallenge,type ChallengeQuestion}from'../../../../components/ui/ActivityWithChallenge'
-const q:ChallengeQuestion[]=[{question:'Retângulo 5 × 3: qual a área?',options:['8','15','16','30'],answer:1,explanation:'5 × 3 = 15 u².'},{question:'Retângulo 5 × 3: qual o perímetro?',options:['8','15','16','30'],answer:2,explanation:'2 × (5 + 3) = 16 u.'},{question:'Quadrado de lado 4 tem área...',options:['8','12','16','20'],answer:2,explanation:'4 × 4 = 16.'},{question:'Duas figuras com a mesma área podem ter...',options:['sempre o mesmo perímetro','perímetros diferentes','nenhum lado','sempre formato igual'],answer:1,explanation:'A forma altera o contorno.'},{question:'Qual retângulo tem área 12?',options:['2 × 5','3 × 4','1 × 10','4 × 4'],answer:1,explanation:'3 × 4 = 12.'}]
-export function AreaPerimeterActivity(){const[width,setWidth]=useState(5);const[height,setHeight]=useState(3);return <ActivityWithChallenge questions={q}><article className="panel activity"><header><p className="eyebrow">Investigue relações</p><h2>Área × perímetro</h2></header><div className="dimension-controls"><label>Largura <input type="range" min="1" max="10" value={width} onChange={e=>setWidth(Number(e.target.value))}/><strong>{width}</strong></label><label>Altura <input type="range" min="1" max="8" value={height} onChange={e=>setHeight(Number(e.target.value))}/><strong>{height}</strong></label></div><div className="area-grid" style={{gridTemplateColumns:`repeat(${width},32px)`}}>{Array.from({length:width*height},(_,i)=><span key={i}/>)}</div><div className="result-pair"><span>Área<strong>{width*height} u²</strong></span><span>Perímetro<strong>{2*(width+height)} u</strong></span></div></article></ActivityWithChallenge>}
+import { useState } from "react";
+import {
+  ActivityWithChallenge,
+  type ChallengeQuestion,
+} from "../../../../components/ui/ActivityWithChallenge";
+const q: ChallengeQuestion[] = [
+  {
+    question: "Retângulo 5 × 3: qual a área?",
+    options: ["8", "15", "16", "30"],
+    answer: 1,
+    explanation: "5 × 3 = 15 u².",
+  },
+  {
+    question: "Retângulo 5 × 3: qual o perímetro?",
+    options: ["8", "15", "16", "30"],
+    answer: 2,
+    explanation: "2 × (5 + 3) = 16 u.",
+  },
+  {
+    question: "Quadrado de lado 4 tem área...",
+    options: ["8", "12", "16", "20"],
+    answer: 2,
+    explanation: "4 × 4 = 16.",
+  },
+  {
+    question: "Duas figuras com a mesma área podem ter...",
+    options: [
+      "sempre o mesmo perímetro",
+      "perímetros diferentes",
+      "nenhum lado",
+      "sempre formato igual",
+    ],
+    answer: 1,
+    explanation: "A forma altera o contorno.",
+  },
+  {
+    question: "Qual retângulo tem área 12?",
+    options: ["2 × 5", "3 × 4", "1 × 10", "4 × 4"],
+    answer: 1,
+    explanation: "3 × 4 = 12.",
+  },
+];
+export function AreaPerimeterActivity() {
+  const [width, setWidth] = useState(5);
+  const [height, setHeight] = useState(3);
+  return (
+    <ActivityWithChallenge questions={q}>
+      <article className="panel activity">
+        <header>
+          <p className="eyebrow">Investigue relações</p>
+          <h2>Área × perímetro</h2>
+        </header>
+        <div className="dimension-controls">
+          <label>
+            Largura{" "}
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={width}
+              onChange={(e) => setWidth(Number(e.target.value))}
+            />
+            <strong>{width}</strong>
+          </label>
+          <label>
+            Altura{" "}
+            <input
+              type="range"
+              min="1"
+              max="8"
+              value={height}
+              onChange={(e) => setHeight(Number(e.target.value))}
+            />
+            <strong>{height}</strong>
+          </label>
+        </div>
+        <div
+          className="area-grid"
+          style={{ gridTemplateColumns: `repeat(${width},32px)` }}
+        >
+          {Array.from({ length: width * height }, (_, i) => (
+            <span key={i} />
+          ))}
+        </div>
+        <div className="result-pair">
+          <span>
+            Área<strong>{width * height} u²</strong>
+          </span>
+          <span>
+            Perímetro<strong>{2 * (width + height)} u</strong>
+          </span>
+        </div>
+      </article>
+    </ActivityWithChallenge>
+  );
+}
