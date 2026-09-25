@@ -2,11 +2,11 @@
 
 | Unidade | Laboratório | Interação central | Habilidades |
 |---|---|---|---|
-| Números | Casa dos números | Alterar um número e observar valor posicional e decomposição | EF05MA01–02 |
+| Números | Casa dos números | Alterar um número formatado e observar valor posicional, milhares destacados e decomposição | EF05MA01–02 |
 | Números | Reta das frações | Alterar numerador/denominador e localizar fração/decimal | EF05MA03–05 |
 | Números | Porcentagens | Sincronizar grade, fração, decimal, bateria e descontos | EF05MA06 |
-| Números | Oficina de cálculo | Montar operações e comparar estimativa com resultado | EF05MA07–08 |
-| Números | Fábrica de combinações | Combinar duas coleções e observar o produto | EF05MA09 |
+| Números | Oficina de cálculo | Comparar estratégias de cálculo mental e algoritmo no papel antes de revelar o resultado | EF05MA07–08 |
+| Números | Fábrica de combinações | Combinar peças por cor e alternar entre pares, árvore e tabela | EF05MA09 |
 | Álgebra | Balança da igualdade | Descobrir termo desconhecido e transformar os dois membros | EF05MA10–11 |
 | Álgebra | Receita proporcional | Redimensionar porções e ingredientes pelo mesmo fator | EF05MA12 |
 | Álgebra | Partilha desigual | Dividir o todo em partes na razão 1:2 | EF05MA13 |
@@ -27,3 +27,4 @@
 - Valores e controles legíveis em TV e utilizáveis por toque.
 - Código BNCC visível em cada atividade.
 - Pergunta ou orientação para mediação do professor.
+- Aba “Desafio” em cada laboratório de Números, com feedback explicativo.

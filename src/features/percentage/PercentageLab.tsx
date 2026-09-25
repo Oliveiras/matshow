@@ -15,7 +15,7 @@ export function PercentageLab() {
     <div className="tab-list" role="tablist" aria-label="Atividades de porcentagem">
       <button className={tab === 'explorar' ? 'active' : ''} onClick={() => setTab('explorar')}>Grade e equivalências</button>
       <button className={tab === 'cantina' ? 'active' : ''} onClick={() => setTab('cantina')}>Cantina e descontos</button>
-      <button className={tab === 'desafio' ? 'active' : ''} onClick={() => setTab('desafio')}>Desafio da TV</button>
+      <button className={tab === 'desafio' ? 'active' : ''} onClick={() => setTab('desafio')}>Desafio</button>
     </div>
     {tab === 'explorar' && <PercentageExplorer />}
     {tab === 'cantina' && <DiscountShop />}
@@ -37,7 +37,7 @@ function PercentageExplorer() {
       <div className="hundred-grid" aria-label={`${value} de 100 quadrados pintados`}>{Array.from({ length: 100 }, (_, index) => <button aria-label={`Quadrado ${index + 1}`} className={index < value ? 'filled' : ''} key={index} onClick={() => setValue(index + 1)} />)}</div>
     </article>
     <article className="panel equivalents"><p className="eyebrow">Três jeitos de dizer a mesma coisa</p><div><span><small>Porcentagem</small><strong>{value}%</strong></span><span><small>Fração</small><strong>{representation.fraction}</strong></span><span><small>Decimal</small><strong>{representation.decimal}</strong></span></div></article>
-    <article className="panel visuals"><div className="battery"><div style={{ width: `${value}%` }} /></div><strong>Bateria: {value}%</strong><div className="pie" style={{ background: `conic-gradient(#f59e0b ${value}%, #e2e8f0 0)` }}><span>{value}%</span></div></article>
+    <article className="panel visuals"><div className="battery"><div style={{ width: `${value}%`, background: value <= 20 ? '#ef4444' : value <= 50 ? '#f59e0b' : '#10b981' }} /></div><strong>Bateria: {value}%</strong><div className="pie" style={{ background: `conic-gradient(#f59e0b ${value}%, #e2e8f0 0)` }}><span>{value}%</span></div></article>
   </div>
 }
 
