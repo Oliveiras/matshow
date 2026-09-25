@@ -1,4 +1,5 @@
-export type ModuleId = 'inicio' | 'numeros' | 'algebra' | 'geometria' | 'medidas' | 'estatistica'
+export type SchoolYear = 1 | 2 | 3 | 4 | 5
+export type ModuleId = string
 
 export interface LearningModule {
   id: ModuleId
@@ -8,4 +9,9 @@ export interface LearningModule {
   description: string
   color: string
   status: 'available' | 'planned'
+}
+
+export interface YearContent {
+  year: SchoolYear
+  modules: LearningModule[]
 }

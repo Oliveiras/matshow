@@ -5,9 +5,11 @@ Laboratório de Matemática visual e interativo para os anos iniciais do Ensino 
 ## Estado atual
 
 - Estrutura-base da aplicação e navegação por unidades temáticas.
-- Laboratório de porcentagem do 5º ano: grade de centésimos, equivalências, descontos e desafios.
+- Seletor do 1º ao 5º ano, com menu e página inicial próprios por ano.
+- Cobertura interativa inicial das 25 habilidades de Matemática do 5º ano da BNCC.
+- Laboratórios de números, álgebra, geometria, medidas, probabilidade e estatística.
 - Caneta de apresentação e modo de tela cheia.
-- Demais módulos sinalizados como planejados até que a pesquisa curricular e as especificações sejam aprovadas.
+- Atividades do 1º ao 4º ano sinalizadas como planejadas até a pesquisa curricular de cada ano.
 
 ## Tecnologias
 

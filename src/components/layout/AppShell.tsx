@@ -1,15 +1,17 @@
 import { useState, type ReactNode } from 'react'
-import type { LearningModule, ModuleId } from '../../types/content'
+import type { LearningModule, ModuleId, SchoolYear } from '../../types/content'
 import { DrawingBoard } from '../tools/DrawingBoard'
 
 interface Props {
   modules: LearningModule[]
+  year: SchoolYear
   active: LearningModule
   onNavigate: (id: ModuleId) => void
+  onChangeYear: (year: SchoolYear) => void
   children: ReactNode
 }
 
-export function AppShell({ modules, active, onNavigate, children }: Props) {
+export function AppShell({ year, modules, active, onNavigate, onChangeYear, children }: Props) {
   const [drawing, setDrawing] = useState(false)
 
   async function toggleFullscreen() {
@@ -23,6 +25,9 @@ export function AppShell({ modules, active, onNavigate, children }: Props) {
         <button className="brand" onClick={() => onNavigate('inicio')} aria-label="Ir para o início">
           <span className="brand-mark">M</span><span className="brand-text">MatShow<small>Laboratório Matemático</small></span>
         </button>
+        <div className="year-picker" aria-label="Selecionar ano escolar">
+          {[1,2,3,4,5].map((item) => <button key={item} className={year === item ? 'active' : ''} onClick={() => onChangeYear(item as SchoolYear)} aria-label={`${item}º ano`}>{item}º</button>)}
+        </div>
         <nav className="nav-list">
           {modules.map((module) => (
             <button
@@ -40,7 +45,7 @@ export function AppShell({ modules, active, onNavigate, children }: Props) {
       </aside>
       <main className="main-area">
         <header className="topbar">
-          <div><p className="eyebrow">5º ano · Ensino Fundamental</p><h1>{active.title}</h1></div>
+          <div><p className="eyebrow">{year}º ano · Ensino Fundamental</p><h1>{active.title}</h1></div>
           <div className="toolbar">
             <button className={drawing ? 'tool-button selected' : 'tool-button'} onClick={() => setDrawing((value) => !value)}>✎ <span>Caneta</span></button>
             <button className="tool-button" onClick={toggleFullscreen}>⛶ <span>Tela cheia</span></button>
