@@ -43,8 +43,15 @@ O resultado de produção é criado em `dist/`.
 ```text
 src/
   components/       # elementos reutilizáveis, layout e ferramentas
-  content/          # catálogo e metadados dos conteúdos
-  features/         # um diretório por laboratório/atividade
+  years/
+    1/ ... 4/       # menu e futura implementação de cada ano
+    5/
+      numbers/      # área do menu lateral
+        fractions/  # uma habilidade/aba, com interface e desafios
+      algebra/
+      geometry/
+      measures/
+      statistics/
   styles/           # estilos globais e tokens visuais
   types/            # contratos compartilhados
 docs/

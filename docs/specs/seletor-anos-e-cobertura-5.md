@@ -14,6 +14,8 @@ Permitir alternar do 1º ao 5º ano sem recarregar a página, fazendo o menu e a
 - Os anos 1º–4º exibem arquitetura e itens planejados, não atividades falsamente concluídas.
 - O 5º ano agrupa atividades nas cinco unidades temáticas da BNCC.
 - Cada laboratório exibe os códigos das habilidades relacionadas.
+- O código espelha a navegação em `years/<ano>/<área>/<atividade>`; cada atividade mantém seu próprio banco de desafios.
+- Cada aba do 5º ano oferece pelo menos cinco desafios com explicação.
 
 ## Critérios de aceite
 

@@ -1,0 +1,2 @@
+import{describe,expect,it}from'vitest';import{modulesForYear}from'./catalog'
+describe('modulesForYear',()=>{it('mantém cinco áreas disponíveis no 5º ano',()=>{const areas=modulesForYear(5).filter(m=>m.id!=='inicio');expect(areas).toHaveLength(5);expect(areas.every(m=>m.status==='available')).toBe(true)});it('oferece menus próprios e planejados nos demais anos',()=>{expect(modulesForYear(1).map(m=>m.id)).not.toEqual(modulesForYear(4).map(m=>m.id));expect(modulesForYear(1).filter(m=>m.id!=='inicio').every(m=>m.status==='planned')).toBe(true)})})

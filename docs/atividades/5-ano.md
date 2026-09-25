@@ -28,3 +28,6 @@
 - Código BNCC visível em cada atividade.
 - Pergunta ou orientação para mediação do professor.
 - Aba “Desafio” em cada laboratório de Números, com feedback explicativo.
+- Pelo menos cinco desafios em cada laboratório das cinco unidades temáticas.
+- A oficina de cálculo apresenta múltiplos exemplos por operação, estratégia mental e conta armada.
+- A fábrica de combinações usa desenhos vetoriais e árvores que podem começar por qualquer coleção.

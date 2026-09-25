@@ -14,8 +14,9 @@ Evoluir o MatShow como um laboratório matemático interativo, estático, acess�
 ## Arquitetura
 
 - Componentes compartilhados ficam em `src/components/`.
-- Conteúdo e metadados editáveis ficam em `src/content/`.
-- Cada laboratório fica em `src/features/<atividade>/` e deve concentrar UI, regras e testes próprios.
+- A estrutura de produto espelha a navegação: `src/years/<ano>/<area>/<atividade>/`.
+- O menu de cada ano fica em `src/years/<ano>/menu.ts`.
+- Cada atividade concentra interface, regras, desafios e testes no próprio diretório.
 - Regras matemáticas devem ser funções puras separadas da interface e cobertas por testes.
 - Não adicionar backend, autenticação, rastreamento ou armazenamento de dados pessoais sem uma decisão arquitetural aprovada.
 - Evitar dependências externas quando HTML, CSS, SVG ou Canvas resolverem bem.
